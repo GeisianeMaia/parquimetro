@@ -1,16 +1,18 @@
 package com.fiap.parquimetro.service;
 
+import com.fiap.parquimetro.dto.UserDTO;
 import com.fiap.parquimetro.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UserService {
 
-    public List<User> getListUsers();
+    public List<UserDTO> getListUsers();
 
-    public User getUserId(String id);
+    public UserDTO getUserId(String id);
 
-    public User createUser( User user);
+    public UserDTO createUser( UserDTO userDTO);
 
     public User calculateTimeUser();
 
@@ -18,4 +20,7 @@ public interface UserService {
 
     public User verifyPaymentWasApproved();
 
+    public UserDTO toUserDTO (User user);
+
+    public User toUser(UserDTO userDTO);
 }

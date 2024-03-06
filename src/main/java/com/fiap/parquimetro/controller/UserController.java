@@ -1,10 +1,12 @@
 package com.fiap.parquimetro.controller;
 
+import com.fiap.parquimetro.dto.UserDTO;
 import com.fiap.parquimetro.model.User;
 import com.fiap.parquimetro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -14,18 +16,18 @@ public class UserController {
     @Autowired
     private UserService userService;
     @GetMapping
-    public List<User> getListUsers(){
+    public List<UserDTO> getListUsers(){
         return this.userService.getListUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserId(@PathVariable String id){
+    public UserDTO getUserId(@PathVariable String id){
         return this.userService.getUserId(id);
     }
 
     @PostMapping
-    public User createTicket(@RequestBody User user){
-        return this.userService.createUser(user);
+    public UserDTO createUser(@RequestBody UserDTO userDTO){
+        return this.userService.createUser(userDTO);
     }
 
     public User calculateTimeUser(){

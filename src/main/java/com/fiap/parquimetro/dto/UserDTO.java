@@ -1,4 +1,7 @@
 package com.fiap.parquimetro.dto;
 
-public record UserDTO() {
+import java.time.LocalDateTime;
+
+public record UserDTO(String id, String time, String plateCar, LocalDateTime startDateTime, String paymentType) {
+
 }
