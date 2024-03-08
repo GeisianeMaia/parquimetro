@@ -1,6 +1,7 @@
 package com.fiap.parquimetro.model;
 
 import lombok.Data;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,15 +13,14 @@ public class User {
     @Id
     private String id;
     private String plateCar;
-    private String time;
     private LocalDateTime startDateTime;
-    private String paymentType;
+    private InfoParking infoParking;
 
-    public User(String id, String plateCar, String time, LocalDateTime startDateTime, String paymentType) {
+    public User(String id, String plateCar, LocalDateTime startDateTime, InfoParking infoParking) {
         this.id = id;
         this.plateCar = plateCar;
-        this.time = time;
         this.startDateTime = startDateTime;
-        this.paymentType = paymentType;
+        this.infoParking = infoParking;
     }
+
 }

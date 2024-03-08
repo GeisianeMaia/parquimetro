@@ -1,10 +1,14 @@
 package com.fiap.parquimetro.service.Impl;
 
+import com.fiap.parquimetro.dto.InfoParkingDTO;
 import com.fiap.parquimetro.dto.UserDTO;
+import com.fiap.parquimetro.model.InfoParking;
 import com.fiap.parquimetro.model.User;
 import com.fiap.parquimetro.repository.UserRepository;
 import com.fiap.parquimetro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,36 +35,40 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado")));
     }
 
+    //    @Override
+//    public UserDTO createUser(UserDTO userDTO) {
+//        User user = toUser(userDTO);
+//        User savedUser = this.userRepository.save(user);
+//        return toUserDTO(savedUser);
+//    }
+
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        User user = toUser(userDTO);
-        User savedUser = this.userRepository.save(user);
-        return toUserDTO(savedUser);
-    }
+        User user = new User(
+                userDTO.id(),
+                userDTO.plateCar(),
+                userDTO.startDateTime(),
+                userDTO.infoParking()
+        );
 
-    @Override
-    public User calculateTimeUser() {
-        return null;
-    }
+        user = userRepository.save(user);
 
-    @Override
-    public User calculateTotalPriceUserWillPay() {
-        return null;
-    }
-
-    @Override
-    public User verifyPaymentWasApproved() {
-        return null;
+        UserDTO createdUserDTO = new UserDTO(
+                user.getId(),
+                userDTO.plateCar(),
+                userDTO.startDateTime(),
+                userDTO.infoParking()
+        );
+        return createdUserDTO;
     }
 
     @Override
     public UserDTO toUserDTO(User user) {
         return new UserDTO(
                 user.getId(),
-                user.getTime(),
                 user.getPlateCar(),
                 user.getStartDateTime(),
-                user.getPaymentType()
+                user.getInfoParking()
         );
     }
 
@@ -68,10 +76,9 @@ public class UserServiceImpl implements UserService {
     public User toUser(UserDTO userDTO) {
         return new User(
                 userDTO.id(),
-                userDTO.time(),
                 userDTO.plateCar(),
                 LocalDateTime.now(),
-                userDTO.paymentType()
+                userDTO.infoParking()
         );
     }
 
