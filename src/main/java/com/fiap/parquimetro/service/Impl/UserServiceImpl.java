@@ -1,13 +1,11 @@
 package com.fiap.parquimetro.service.Impl;
 
-import com.fiap.parquimetro.dto.InfoParkingDTO;
 import com.fiap.parquimetro.dto.UserDTO;
 import com.fiap.parquimetro.model.InfoParking;
 import com.fiap.parquimetro.model.User;
 import com.fiap.parquimetro.repository.UserRepository;
 import com.fiap.parquimetro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +33,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado")));
     }
 
+    @Override
+    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParking infoParking) {
+        return null;
+    }
+
     //    @Override
 //    public UserDTO createUser(UserDTO userDTO) {
 //        User user = toUser(userDTO);
@@ -42,25 +45,25 @@ public class UserServiceImpl implements UserService {
 //        return toUserDTO(savedUser);
 //    }
 
-    @Override
-    public UserDTO createUser(UserDTO userDTO) {
-        User user = new User(
-                userDTO.id(),
-                userDTO.plateCar(),
-                userDTO.startDateTime(),
-                userDTO.infoParking()
-        );
-
-        user = userRepository.save(user);
-
-        UserDTO createdUserDTO = new UserDTO(
-                user.getId(),
-                userDTO.plateCar(),
-                userDTO.startDateTime(),
-                userDTO.infoParking()
-        );
-        return createdUserDTO;
-    }
+//    @Override
+//    public UserDTO createUser(UserDTO userDTO) {
+//        User user = new User(
+//                userDTO.id(),
+//                userDTO.plateCar(),
+//                userDTO.startDateTime(),
+//                userDTO.infoParking()
+//        );
+//
+//        user = userRepository.save(user);
+//
+//        UserDTO createdUserDTO = new UserDTO(
+//                user.getId(),
+//                userDTO.plateCar(),
+//                userDTO.startDateTime(),
+//                userDTO.infoParking()
+//        );
+//        return createdUserDTO;
+//    }
 
     @Override
     public UserDTO toUserDTO(User user) {
