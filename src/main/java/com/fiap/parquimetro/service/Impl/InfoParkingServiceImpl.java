@@ -1,9 +1,7 @@
 package com.fiap.parquimetro.service.Impl;
 
 import com.fiap.parquimetro.dto.InfoParkingDTO;
-import com.fiap.parquimetro.dto.UserDTO;
 import com.fiap.parquimetro.model.InfoParking;
-import com.fiap.parquimetro.model.User;
 import com.fiap.parquimetro.repository.InfoParkingRepository;
 import com.fiap.parquimetro.repository.UserRepository;
 import com.fiap.parquimetro.service.InfoParkingService;

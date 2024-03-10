@@ -1,7 +1,7 @@
 package com.fiap.parquimetro.service;
 
+import com.fiap.parquimetro.dto.InfoParkingDTO;
 import com.fiap.parquimetro.dto.UserDTO;
-import com.fiap.parquimetro.model.InfoParking;
 import com.fiap.parquimetro.model.User;
 import org.springframework.http.ResponseEntity;
 
@@ -13,9 +13,7 @@ public interface UserService {
 
     public UserDTO getUserId(String id);
 
-//    public UserDTO createUser(UserDTO userDTO);
-
-    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParking infoParking);
+    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParkingDTO infoParkingDTO);
     public UserDTO toUserDTO (User user);
 
     public User toUser(UserDTO userDTO);

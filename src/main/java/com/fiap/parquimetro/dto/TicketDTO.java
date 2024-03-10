@@ -1,4 +1,7 @@
 package com.fiap.parquimetro.dto;
 
-public record TicketDTO(UserDTO userDTO, InfoParkingDTO infoParkingDTO) {
+import com.fiap.parquimetro.model.InfoParking;
+import com.fiap.parquimetro.model.User;
+
+public record TicketDTO(User user, InfoParking infoParking) {
 }

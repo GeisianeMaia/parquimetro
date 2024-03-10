@@ -1,13 +1,17 @@
 package com.fiap.parquimetro.service.Impl;
 
+import com.fiap.parquimetro.dto.InfoParkingDTO;
 import com.fiap.parquimetro.dto.UserDTO;
 import com.fiap.parquimetro.model.InfoParking;
 import com.fiap.parquimetro.model.User;
+import com.fiap.parquimetro.repository.InfoParkingRepository;
 import com.fiap.parquimetro.repository.UserRepository;
 import com.fiap.parquimetro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +22,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private InfoParkingRepository infoParkingRepository;
+
+    @Autowired
+    private InfoParkingServiceImpl infoParkingServiceImpl;
+    @Autowired
+    private MongoTransactionManager transactionManager;
 
     @Override
     public List<UserDTO> getListUsers() {
@@ -34,37 +46,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParking infoParking) {
+    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParkingDTO infoParkingDTO) {
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.execute(status -> {
+            try {
+                User user = toUser(userDTO);
+                userRepository.save(user);
+                InfoParking infoParking = infoParkingServiceImpl.toInfoParking(infoParkingDTO);
+                user.setInfoParking(infoParking);
+                infoParkingRepository.save(infoParking);
+            } catch (Exception e) {
+                status.setRollbackOnly();
+                throw new RuntimeException("Erro ao criar usuário!" + e.getMessage());
+            }
+            return null;
+        });
         return null;
     }
-
-    //    @Override
-//    public UserDTO createUser(UserDTO userDTO) {
-//        User user = toUser(userDTO);
-//        User savedUser = this.userRepository.save(user);
-//        return toUserDTO(savedUser);
-//    }
-
-//    @Override
-//    public UserDTO createUser(UserDTO userDTO) {
-//        User user = new User(
-//                userDTO.id(),
-//                userDTO.plateCar(),
-//                userDTO.startDateTime(),
-//                userDTO.infoParking()
-//        );
-//
-//        user = userRepository.save(user);
-//
-//        UserDTO createdUserDTO = new UserDTO(
-//                user.getId(),
-//                userDTO.plateCar(),
-//                userDTO.startDateTime(),
-//                userDTO.infoParking()
-//        );
-//        return createdUserDTO;
-//    }
-
+    
     @Override
     public UserDTO toUserDTO(User user) {
         return new UserDTO(

@@ -1,14 +1,13 @@
 package com.fiap.parquimetro.controller;
 
+import com.fiap.parquimetro.dto.InfoParkingDTO;
+import com.fiap.parquimetro.dto.TicketDTO;
 import com.fiap.parquimetro.dto.UserDTO;
-import com.fiap.parquimetro.model.User;
 import com.fiap.parquimetro.service.InfoParkingService;
 import com.fiap.parquimetro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class UserController {
     private UserService userService;
 
     private InfoParkingService infoParkingService;
+
     @Autowired
     public UserController(UserService userService, InfoParkingService infoParkingService) {
         this.userService = userService;
@@ -27,38 +27,30 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserDTO> getListUsers(){
+    public List<UserDTO> getListUsers() {
         return this.userService.getListUsers();
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserId(@PathVariable String id){
+    public UserDTO getUserId(@PathVariable String id) {
         return this.userService.getUserId(id);
     }
 
-//    @PostMapping
-//    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-//        UserDTO createdUser = userService.createUser(userDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-//    }
+    @PostMapping
+    public ResponseEntity<?> createUser(@RequestBody TicketDTO request) {
 
-//    @PostMapping
-//    public ResponseEntity<UserDTO> createUser(@RequestBody TicketDTO objRequest) {
-//
-//        UserDTO userDTO = objRequest.userDTO();
-//        InfoParkingDTO infoParkingDTO = objRequest.infoParkingDTO();
-//        return this.userService.createUser(userDTO, infoParkingDTO);
-//    }
+        UserDTO userDTO = new UserDTO(
+                null,
+                request.user().getPlateCar(),
+                request.user().getStartDateTime(),
+                null
 
-    public User calculateTimeUser(){
-        return null;
-    }
-
-    public User calculateTotalPriceUserWillPay(){
-        return null;
-    }
-
-    public User verifyPaymentWasApproved(){
-        return null;
+        );
+        InfoParkingDTO infoParkingDTO = new InfoParkingDTO(
+                null,
+                request.infoParking().getTime(),
+                request.infoParking().getPrice()
+        );
+        return this.userService.createUser(userDTO, infoParkingDTO);
     }
 }
