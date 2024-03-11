@@ -52,6 +52,6 @@ public class UserController {
                 request.infoParking().getTime(),
                 request.infoParking().getPrice()
         );
-        return this.userService.createUser(userDTO, infoParkingDTO);
+        return this.userService.createUserInfoParking(userDTO, infoParkingDTO);
     }
 }
