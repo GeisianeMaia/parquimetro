@@ -16,7 +16,9 @@ public class User {
 
     @NotBlank(message = "A placa do carro não pode estar em branco.")
     private String plateCar;
+    private String Address;
     private LocalDateTime startDateTime;
+    private LocalDateTime finishDateTime;
     @DBRef
     private InfoParking infoParking;
 

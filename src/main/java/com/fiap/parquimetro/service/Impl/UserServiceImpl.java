@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +56,12 @@ public class UserServiceImpl implements UserService {
                 InfoParking infoParking = infoParkingServiceImpl.toInfoParking(infoParkingDTO);
                 user.setInfoParking(infoParking);
                 infoParkingRepository.save(infoParking);
+
+                double timeInHours = infoParkingDTO.time();
+                Duration duration = Duration.ofMinutes(Math.round(timeInHours * 60));
+                user.setFinishDateTime(user.getStartDateTime().plus(duration));
+
+                userRepository.save(user);
             } catch (Exception e) {
                 status.setRollbackOnly();
                 throw new RuntimeException("Erro ao criar usuário!" + e.getMessage());
