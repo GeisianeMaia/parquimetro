@@ -13,7 +13,7 @@ public interface UserService {
 
     public UserDTO getUserId(String id);
 
-    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParkingDTO infoParkingDTO);
+    public ResponseEntity<?> createUserInfoParking(UserDTO userDTO, InfoParkingDTO infoParkingDTO);
     public UserDTO toUserDTO (User user);
 
     public User toUser(UserDTO userDTO);

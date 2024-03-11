@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     private String id;
+
+    @NotBlank(message = "A placa do carro não pode estar em branco.")
     private String plateCar;
     private LocalDateTime startDateTime;
     @DBRef

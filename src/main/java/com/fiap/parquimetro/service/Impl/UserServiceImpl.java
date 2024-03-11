@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> createUser(UserDTO userDTO, InfoParkingDTO infoParkingDTO) {
+    public ResponseEntity<?> createUserInfoParking(UserDTO userDTO, InfoParkingDTO infoParkingDTO) {
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.execute(status -> {
             try {

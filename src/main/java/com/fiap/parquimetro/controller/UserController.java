@@ -5,6 +5,7 @@ import com.fiap.parquimetro.dto.TicketDTO;
 import com.fiap.parquimetro.dto.UserDTO;
 import com.fiap.parquimetro.service.InfoParkingService;
 import com.fiap.parquimetro.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody TicketDTO request) {
+    public ResponseEntity<?> createUserInfoParking(@Valid @RequestBody TicketDTO request) {
 
         UserDTO userDTO = new UserDTO(
                 null,
